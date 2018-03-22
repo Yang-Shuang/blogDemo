@@ -9,20 +9,26 @@ import java.util.Date;
  */
 public class LogUtil {
 
-    private static final boolean isWriteLog = false;
-
+    private static final boolean isWriteLog = true;
+    private static final String LOG_FILE_PATH = "E:\\tomcatlog/";
     public static void print(Object str){
         if (str == null || (str instanceof String && str.equals("")))return;
         String log = getTimeStr() + str.toString();
-        System.out.print(log);
+        System.out.println(log);
         if (isWriteLog) {
-            // 记录日志文件
+            writeLog(log + "\n");
         }
     }
 
     private static String getTimeStr(){
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss:SSS>>>>>>>>>>>>>>");
-
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss:SSS----->");
         return format.format(new Date());
     }
+
+    private static void writeLog(String log){
+        String fileName = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+        FileUtil.writeFile(LOG_FILE_PATH + fileName + ".log",log,true);
+    }
+
+
 }
